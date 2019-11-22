@@ -8,40 +8,10 @@ var nodemailer = require('nodemailer'); //send emails
 var express = require('express');
 var mysql = require('mysql');
 
+var sendEmail = require('./sendmailmodule');
+
 var testpages=[];
 var testemails=[];
-
-function sendemail(to,num) {
-
-  console.log("to: ",to);
-  console.log("num: ",num);
-
-  var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'printoverflow@gmail.com',
-      pass: 'xxxpasswordxxx'
-    }
-  });
-
-  var content = "You have printed " + num + " pages.";
-
-  var mailOptions = {
-    from: 'printoverflow@gmail.com',
-    to: to,
-    subject: 'Sending Email using Node.js',
-    text: content,
-  };
-
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log(info);
-      console.log('Email sent: ' + info.response);
-    }
-  });
-}
 
 function print() {
 
@@ -55,7 +25,7 @@ function print() {
 
   emailadd.forEach((v,index) => {
     if (finalpages[index]>500)
-      return sendemail(emailadd[index],finalpages[index]);
+      return sendEmail(emailadd[index],finalpages[index]);
   });
 }
 
@@ -90,7 +60,7 @@ con.connect(function(err) {
     console.log("Table created");
   });
 
-  var sql = "INSERT IGNORE INTO mytable (name,netid,pages) VALUES ('Daniel', 'hsj276','307'),('Yeojin','yj1254','503'),('Zayd','ds994','242')";
+  var sql = "INSERT IGNORE INTO mytable (name,netid,pages) VALUES ('Daniel', 'hsj276','307'),('Yeojin','yj1254','503'),('Zayd','zm994','242')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("record inserted");
@@ -98,7 +68,7 @@ con.connect(function(err) {
 
   // con.query("UPDATE mytable SET netid='hsj276' WHERE name='Daniel'");
   // con.query("UPDATE mytable SET netid='yj1254' WHERE name='Yeojin'");
-  // con.query("UPDATE mytable SET netid='ds994' WHERE name='Zayd'");
+  con.query("UPDATE mytable SET netid='zm994' WHERE name='Zayd'");
 
   con.query("SELECT pages FROM mytable", function (err, result, fields) {
     if (err) throw err;
