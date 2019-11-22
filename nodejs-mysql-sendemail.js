@@ -8,6 +8,7 @@ var nodemailer = require('nodemailer'); //send emails
 var express = require('express');
 var mysql = require('mysql');
 
+
 var testpages=[];
 var testemails=[];
 
@@ -24,13 +25,21 @@ function sendemail(to,num) {
     }
   });
 
-  var content = "You have printed " + num + " pages.";
+  var content = "";
+  
+  var graph="<b><p>You have printed " + num + " pages."+
+  "</p>"+"<p>That is around "+ parseInt(0.06*num)+" kg of CO2 or an equivalant of driving a car for "+parseInt(0.06*num*1.6/0.404)+" km.</p>"+
+  "It also used up "+ parseInt(20*num)+" litres of water.</b>"+
+  '<canvas id="myChart" width="400" height="400"></canvas>\
+  <script src="./myChart.js"></script>\
+  ';
 
   var mailOptions = {
     from: 'printoverflow@gmail.com',
     to: to,
     subject: 'Sending Email using Node.js',
-    text: content,
+    
+    html:graph
   };
 
   transporter.sendMail(mailOptions, function(error, info){
@@ -62,7 +71,7 @@ function print() {
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password"
+  password: ""
 });
 
 con.connect(function(err) {
@@ -90,7 +99,7 @@ con.connect(function(err) {
     console.log("Table created");
   });
 
-  var sql = "INSERT IGNORE INTO mytable (name,netid,pages) VALUES ('Daniel', 'hsj276','307'),('Yeojin','yj1254','503'),('Zayd','ds994','242')";
+  var sql = "INSERT IGNORE INTO mytable (name,netid,pages) VALUES ('Zayd','zm994','501')";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("record inserted");
@@ -98,7 +107,7 @@ con.connect(function(err) {
 
   // con.query("UPDATE mytable SET netid='hsj276' WHERE name='Daniel'");
   // con.query("UPDATE mytable SET netid='yj1254' WHERE name='Yeojin'");
-  // con.query("UPDATE mytable SET netid='ds994' WHERE name='Zayd'");
+  // con.query("UPDATE mytable SET netid='zm994' WHERE name='Zayd'");
 
   con.query("SELECT pages FROM mytable", function (err, result, fields) {
     if (err) throw err;
