@@ -34,7 +34,7 @@ function sendemail(to,num) {
   <script src="./myChart.js"></script>\
   ';
 
-  var mailOptions = {
+  var mailOptions = { 
     from: 'printoverflow@gmail.com',
     to: to,
     subject: 'Sending Email using Node.js',
