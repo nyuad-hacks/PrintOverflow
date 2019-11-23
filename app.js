@@ -50,5 +50,5 @@ sqlcon.query("SELECT name,netid,pages FROM mytable", function (err, result, fiel
     // console.log("all:", result);
     users = Object.values(JSON.parse(JSON.stringify(result)));
     console.log("users: ",users);
-    // print();
+    print();
   });
