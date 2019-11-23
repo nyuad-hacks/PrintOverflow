@@ -39,7 +39,7 @@ function sendemail(to,num,id) {
     <script src="./myChart.js"></script>\
     ';
 
-    var mailOptions = { 
+    var mailOptions = {
     from: 'printoverflow@gmail.com',
     to: to,
     subject: 'Sending Email using Node.js',
@@ -86,7 +86,7 @@ function print() {
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "password" //changed password  
+  password: "password" //changed password
 });
 
 con.connect(function(err) {
@@ -137,20 +137,20 @@ con.connect(function(err) {
     });
 
 
-    //calculating average 
+    //calculating average
     con.query("SELECT AVG(pages) FROM mytable", function(err, result){
         if (err) throw err;
         avg = Object.values(JSON.parse(JSON.stringify(result)));
         console.log(avg);
     });
 
-    //calculating percentile 
+    //calculating percentile
     con.query("SELECT netid, ROUND(PERCENT_RANK() OVER (ORDER BY pages),2) percentile_rank FROM mytable", function(err,result){
         if (err) throw err;
         percentile = Object.values(JSON.parse(JSON.stringify(result)));
         console.log(percentile);
     });
-    
+
 
 });
 

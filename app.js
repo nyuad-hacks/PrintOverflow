@@ -14,6 +14,7 @@ var sendEmailwithTemp = require('./sendmailwithtemp.js');
 var sqlcon = require('./createMysql.js');
 
 var users=[];
+var avg;
 
 function print() {
 
@@ -36,21 +37,25 @@ function print() {
 }
 
 
-////// CONNECT TO MYSQL //////
+////// MYSQL //////
 
 sqlcon.query("USE mydb", function (err, result) {
   if (err) throw err;
   console.log("sqlcon connected");
 });
 
-sqlcon.query("SELECT name,netid,pages FROM mytable", function (err, result, fields) {
+sqlcon.query("SELECT name,netid,pages,ROUND(PERCENT_RANK() OVER (ORDER BY pages),2) percentile_rank FROM mytable", function (err, result, fields) {
     if (err) throw err;
     // console.log("all:", result);
     users = Object.values(JSON.parse(JSON.stringify(result)));
     console.log("users: ",users);
-    // print();
+    print();
 
-    console.log(users[1]);
-    sendEmailwithTemp('report',users[1]);
+});
 
-  });
+//calculating average
+sqlcon.query("SELECT AVG(pages) AS avg FROM mytable", function(err, result){
+    if (err) throw err;
+    var temp = Object.values(JSON.parse(JSON.stringify(result)));
+    avg = temp[0].avg;
+});
