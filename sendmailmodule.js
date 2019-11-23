@@ -20,13 +20,13 @@ var mysql = require('mysql');
     }
   });
 
-  module.exports = function sendEmail(to,num) {
+  module.exports = function sendEmail(context) {
 
-    var content = "You have printed " + num + " pages.";
+    var content = "You have printed " + context.pages + " pages.";
 
     const mailOptions = {
       from: 'printoverflow@gmail.com',
-      to: to,
+      to: context.netid,
       subject: 'PRINT OVERFLOW!',
       text: content,
     };
