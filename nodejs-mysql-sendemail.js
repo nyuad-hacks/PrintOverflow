@@ -7,10 +7,20 @@ var formidable = require('formidable'); //file uploads
 var nodemailer = require('nodemailer'); //send emails
 var express = require('express');
 var mysql = require('mysql');
-
+var app=express();
+app.set('views', './views');
+app.set('view engine', 'pug');
+port=8080;
 
 var testpages=[];
 var testemails=[];
+
+
+
+app.get('/', function (req, res) {
+  res.render('index', { pages: 'Hey', water: 'billion liters' })
+})
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 function sendemail(to,num) {
 
@@ -27,19 +37,13 @@ function sendemail(to,num) {
 
   var content = "";
   
-  var graph="<b><p>You have printed " + num + " pages."+
-  "</p>"+"<p>That is around "+ parseInt(0.06*num)+" kg of CO2 or an equivalant of driving a car for "+parseInt(0.06*num*1.6/0.404)+" km.</p>"+
-  "It also used up "+ parseInt(20*num)+" litres of water.</b>"+
-  '<canvas id="myChart" width="400" height="400"></canvas>\
-  <script src="./myChart.js"></script>\
-  ';
-
+  
   var mailOptions = { 
     from: 'printoverflow@gmail.com',
     to: to,
     subject: 'Sending Email using Node.js',
     
-    html:graph
+    html:'<script>    data=[20000,14000,12000,15000,18000,19000,22000];labels=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];varctx=document.getElementById("myChart").getContext(\'2d\');varmyChart=newChart(ctx,{type:\'line\',data:{labels:labels,datasets:[{label:\'Thisweek\',data:data,}]},});</script>'
   };
 
   transporter.sendMail(mailOptions, function(error, info){
