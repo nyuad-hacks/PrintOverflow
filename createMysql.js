@@ -25,7 +25,7 @@ con.connect(function(err) {
     console.log("mytable dropped");
   });
 
-  var sql = "CREATE TABLE IF NOT EXISTS mytable (id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255), netid VARCHAR(10), pages INT)";
+  var sql = "CREATE TABLE IF NOT EXISTS mytable (id INT AUTO_INCREMENT PRIMARY KEY,name VARCHAR(255), netid VARCHAR(30), pages INT)";
   con.query(sql, function (err, result) {
     if (err) throw err;
     console.log("Table created");
@@ -37,9 +37,9 @@ con.connect(function(err) {
     console.log("record inserted");
   });
 
-  // con.query("UPDATE mytable SET netid='hsj276' WHERE name='Daniel'");
-  // con.query("UPDATE mytable SET netid='yj1254' WHERE name='Yeojin'");
-  // con.query("UPDATE mytable SET netid='zm994' WHERE name='Zayd'");
+  con.query("UPDATE mytable SET netid='hsj276@nyu.edu' WHERE name='Daniel'");
+  con.query("UPDATE mytable SET netid='yj1254@nyu.edu' WHERE name='Yeojin'");
+  con.query("UPDATE mytable SET netid='zm994@nyu.edu' WHERE name='Zayd'");
 
 });
 

@@ -19,6 +19,7 @@ function loadTemplate (templateName,context) {
 
   let template = new EmailTemplate(path.join(__dirname,'templates',templateName));
 
+
   return new Promise((resolve,reject) => {
     template.render(context, (err,result) => {
       if (err) reject(err);

@@ -13,8 +13,6 @@ var sendEmail = require('./sendmailmodule.js');
 var sendEmailwithTemp = require('./sendmailwithtemp.js');
 var sqlcon = require('./createMysql.js');
 
-var testpages=[];
-var testemails=[];
 var users=[];
 
 function print() {
@@ -50,5 +48,9 @@ sqlcon.query("SELECT name,netid,pages FROM mytable", function (err, result, fiel
     // console.log("all:", result);
     users = Object.values(JSON.parse(JSON.stringify(result)));
     console.log("users: ",users);
-    print();
+    // print();
+
+    console.log(users[1]);
+    sendEmailwithTemp('report',users[1]);
+
   });
